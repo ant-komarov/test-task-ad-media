@@ -16,12 +16,8 @@ class SpendStatisticView(APIView):
             sum_conversion=Sum("conversion"),
             sum_revenue=Sum("revenue__revenue"),
         )
-        cleaned_data = []
-        for item in queryset:
-            item["date"] = item["date"].strftime("%Y-%m-%d")
-            cleaned_data.append(item)
 
-        serializer = SpendStatisticSerializer(cleaned_data, many=True)
+        serializer = SpendStatisticSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
