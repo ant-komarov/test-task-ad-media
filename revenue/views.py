@@ -20,12 +20,8 @@ class RevenueStatisticView(APIView):
             sum_clicks=Sum("spend__clicks"),
             sum_conversion=Sum("spend__conversion"),
         )
-        cleaned_data = []
-        for item in queryset:
-            item["date"] = item["date"].strftime("%Y-%m-%d")
-            cleaned_data.append(item)
 
-        serializer = RevenueStatisticSerializer(cleaned_data, many=True)
+        serializer = RevenueStatisticSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
